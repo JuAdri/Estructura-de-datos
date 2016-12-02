@@ -14,7 +14,7 @@ conjunto<T,CMP>::iterator::iterator(){
 
 template <typename T, typename CMP>
 const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::iterator::operator*(){
-    
+
     return (*it);
 }
 
@@ -39,16 +39,17 @@ typename conjunto<T,CMP>::iterator& conjunto<T,CMP>::iterator::operator--(){
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator& conjunto<T,CMP>::iterator::operator-=(int i){
     it-=i;
+    return *this;
 }
 
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::iterator::operator==(const iterator& x) const{
-    return it==x.it;
+    return it == x.it;
 }
 
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::iterator::operator!=(const iterator& x) const{
-    return it!=x.it;
+    return it != x.it;
 }
 
 template <typename T, typename CMP>
@@ -65,46 +66,48 @@ typename conjunto<T,CMP>::iterator& conjunto<T,CMP>::iterator::operator =(const 
 
 template <typename T, typename CMP>
 const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::const_iterator::operator*(){
-    
-    return (elvector->at(0));
-    
+  return (*it);
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator& conjunto<T,CMP>::const_iterator::operator++(){
-    elvector++;
+  it++;
+  return *this;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::const_iterator::operator++(int i){
-    elvector+=i;
+  it+=i;
+  return *this;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator& conjunto<T,CMP>::const_iterator::operator--(){
-    elvector--;
+  it--;
+  return *this;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::const_iterator::operator--(int i){
-    elvector-=i;
+  it-=i;
+  return *this;
 }
 
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_iterator::operator==(const const_iterator& x) const{
-    return &elvector==&x.elvector;
+  return it == x.it;
 }
 
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_iterator::operator!=(const const_iterator& x) const{
-    return elvector!=x.elvector;
+  return it != x.it;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator& conjunto<T,CMP>::const_iterator::operator =(const const_iterator& x){
-    if(this != &x)
-        this->elvector = x.elvector;
-    return *this;
+  if(this != &x)
+      this->elvector = x.elvector;
+  return *this;
 }
 
 //////////////////
@@ -159,14 +162,14 @@ typename conjunto<T,CMP>::size_type conjunto<T,CMP>::count (const conjunto<T,CMP
 
 //METODOS INSERT
 
-template <typename T, typename CMP> 
+template <typename T, typename CMP>
 
 pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert(const conjunto<T,CMP>::value_type &c){
     pair<typename conjunto<T,CMP>::iterator, bool> salida;
     bool fin = false;
-    
+
     for (conjunto<T,CMP>::iterator ite = begin(); ite!=end() && !fin; ){
-        if (comp(*ite,c) ) 
+        if (comp(*ite,c) )
             ++ite;
         else if (!comp(*ite,c) && !comp(c,*ite)){ // equivalentes segun CMP
             salida.first = end();
@@ -179,7 +182,7 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert(const conj
             salida.second = fin = true;
         }
     } // del for
-    
+
     if (!fin){
         salida.first = end();
                 vm.insert(end().it,c);
@@ -191,12 +194,12 @@ pair<typename conjunto<T,CMP>::iterator,bool> conjunto<T,CMP>::insert(const conj
 //METODOS ERASE
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator conjunto<T,CMP>::erase(const conjunto<T,CMP>::iterator position){
-  
+
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::size_type conjunto<T,CMP>::erase(const conjunto<T,CMP>::value_type &val){
-  
+
 }
 
 
@@ -233,7 +236,7 @@ typename conjunto<T,CMP>::iterator conjunto<T,CMP>::begin(){
     conjunto<T, CMP>::iterator ite;
     ite.elvector=&vm;
     ite.it=ite.elvector->begin();
-    
+
     return ite;
 }
 
@@ -253,7 +256,7 @@ typename conjunto<T,CMP>::iterator conjunto<T,CMP>::end(){
    conjunto<T, CMP>::iterator ite;
     ite.elvector=&vm;
     ite.it=ite.elvector->end();
-    
+
     return ite;
 }
 
@@ -368,17 +371,3 @@ ostream& operator<< (ostream& os, const conjunto<T,CMP> &c){
 
    return os;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
