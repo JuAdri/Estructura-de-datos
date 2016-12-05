@@ -120,13 +120,13 @@ bool conjunto<T,CMP>::const_iterator::operator==(const const_iterator& x) const{
 
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::const_iterator::operator!=(const const_iterator& x) const{
-    return elvector!=x.elvector;
+    return it!=x.it;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator& conjunto<T,CMP>::const_iterator::operator =(const const_iterator& x){
     if(this != &x){
-        this->elvector = x.elvector;
+        elvector = x.elvector;
         it= x.it;
     }
     return *this;
@@ -154,7 +154,7 @@ const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::impar_iterator::op
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator& conjunto<T,CMP>::impar_iterator::operator++(){
     ++it;
-    if(it.getPos() % 2 != 0)
+    if(it->getPos() % 2 != 0)
       ++it;
 
     return *this;
@@ -163,7 +163,7 @@ typename conjunto<T,CMP>::impar_iterator& conjunto<T,CMP>::impar_iterator::opera
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::impar_iterator::operator++(int i){
     it+=i;
-    if(it.getPos() % 2 == 0)
+    if(it->getPos() % 2 == 0)
       ++it;
     return *this;
 }
@@ -209,7 +209,7 @@ const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::const_impar_iterat
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_impar_iterator& conjunto<T,CMP>::const_impar_iterator::operator++(){
     ++it;
-    if(it.getPos() % 2 != 0)
+    if(it->getPos() % 2 != 0)
       ++it;
 
     return *this;
@@ -218,7 +218,7 @@ typename conjunto<T,CMP>::const_impar_iterator& conjunto<T,CMP>::const_impar_ite
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::const_impar_iterator::operator++(int i){
     it+=i;
-    if(it.getPos() % 2 == 0)
+    if(it->getPos() % 2 == 0)
       ++it;
     return *this;
 }
@@ -376,21 +376,25 @@ typename conjunto<T,CMP>::iterator conjunto<T,CMP>::begin(){
 //METODO CBEGIN
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::cbegin() const{
-    const_iterator it;
-    it.elvector= &vm;
-    return it;
+    conjunto<T,CMP>::const_iterator ite;
+    ite.elvector= &vm;
+    ite.it= ite.elvector->cbegin();
+    return ite;
 }
 
 //METODO IBEGIN
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::ibegin(){
     conjunto<T, CMP>::impar_iterator ite;
+    conjunto<T, CMP>::iterator itb= begin();
     ite.elvector=&vm;
-    if(begin().getPos() % 2 != 0)
-      ite.it=ite.elvector->begin();
-    else
-      ite.it = ite.elvector->begin()--;
-
+    if(itb.it->getPos() % 2 != 0)
+      ite.it=itb.it;
+    else{
+        for(; itb != end(); ++itb)
+             if(itb.it->getPos() % 2 != 0)
+                 ite.it=itb.it;
+    }
     return ite;
 }
 
@@ -399,7 +403,7 @@ template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::cibegin() const{
     conjunto<T, CMP>::const_impar_iterator ite;
     ite.elvector=&vm;
-    if(begin().getPos() % 2 != 0)
+    if(begin().it->getPos() % 2 != 0)
       ite.it=ite.elvector->begin();
     else
       ite.it = ite.elvector->begin()--;
@@ -422,7 +426,7 @@ template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::cend() const{
     conjunto<T, CMP>::const_iterator ite;
     ite.elvector=&vm;
-    ite.it=ite.elvector->end();
+    ite.it=ite.elvector->cend();
 
     return ite;
 }
@@ -432,10 +436,7 @@ template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::iend(){
     conjunto<T, CMP>::impar_iterator ite;
     ite.elvector=&vm;
-    if(end().getPos() % 2 != 0)
-      ite.it=ite.elvector->end();
-    else
-      ite.it = ite.elvector->end()--;
+    ite.it=ite.elvector->end();
 
     return ite;
 }
@@ -445,7 +446,7 @@ template <typename T, typename CMP>
 typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::ciend() const{
     conjunto<T, CMP>::const_impar_iterator ite;
     ite.elvector=&vm;
-    if(end().getPos() % 2 != 0)
+    if(end()->getPos() % 2 != 0)
       ite.it=ite.elvector->end();
     else
       ite.it = ite.elvector->end()--;
@@ -548,8 +549,10 @@ bool conjunto::cheq_rep() const{
 template <typename T, typename CMP>
 ostream& operator<< (ostream& os, const conjunto<T,CMP> &c){
    //Imprimir todo el conjunto de mutaciones
-
-   for(typename conjunto<T,CMP>::const_iterator it=c.cbegin(); it!=c.cend(); ++it){
+typename conjunto<T,CMP>::const_iterator it=c.cbegin();
+typename conjunto<T,CMP>::const_iterator itf=c.cend();
+   
+for(; it!=itf; ++it){
       os << *it;
       if(++it != c.cend())
          os << ", ";

@@ -50,11 +50,9 @@ template <typename T>
 int distancia( T  ita, T  itb){
 int cont = 0;
 
-
  while (ita!=itb){
    ++cont;
    ++ita;
-
  }
 
 return cont;
@@ -78,10 +76,10 @@ int main(int argc, char *argv[]){
     else cout << (*it).getID() << " "  << (*it).getPos() << endl;
 
     x.setPos(0);
-    x.setChr("3");
+    x.setChr("1");
 
     y.setPos(0);
-    y.setChr("4");
+    y.setChr("MT");
 
     cout << "En rango "<< distancia(cm.lower_bound(x),cm.lower_bound(y)) << endl;
     it = cm.end();
@@ -103,14 +101,18 @@ int main(int argc, char *argv[]){
 	cout << "Leo decreciente!!!" <<endl;
     load(cmg,"clinvar_20160831.vcf");
    i = 0;
+   
   cout << cmg.size() << endl;
 
   cout << cmg << endl;
-/*
-    cout << "Posiciones Impares" <<endl;
-   for (auto iti=cmg.ibegin();iti!=cmg.iend();++iti)
-        cout << *iti <<endl;
 
+  
+    cout << "Posiciones Impares" <<endl;
+    
+   
+    for (auto iti=cmg.ibegin(); iti!=cmg.iend(); ++iti)
+        cout << *iti <<endl;
+/*
    conjunto<mutacion,greater<mutacion> >::secure_iterator sit=cmg.send();
    --sit;
  // Borro 10 elementos;
