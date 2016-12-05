@@ -338,7 +338,7 @@ ostream& operator<< (ostream& os, const mutacion& m){
   *@param[in] m Mutacion a comparar
   * @return True si son iguales, false si no lo son
   */
-bool mutacion::operator==(const mutacion& m) const{
+bool mutacion::operator==(const mutacion& m){
    return getID() == m.getID();
 }
 
@@ -396,6 +396,34 @@ bool mutacion::operator<(const mutacion & m) const{
   }
 
    return getPos() < m.getPos();
+}
+
+bool mutacion::operator>(const mutacion & m) const{
+  ///El orden viene determinado por Chr y pos. El primer criterio es el n�mero de cromosoma. El orden para el n�mero de cromosoma se rige por "1"<"2"<"3"<->->-><"22"<"X"<"Y"<"MT". Dos mutaciones del mismo cromosoma deben ordenarse seg�n su posici�n, de menor posici�n a mayor (orden natural de enteros)->
+  if(getChr()=="MT"){             //en caso de que sea MT
+      if(m.getChr()!="MT")
+         return true;
+  }
+  else if(getChr()>="X"){           //en caso de que sea X, Y
+     //cout << getChr() << "\n";
+     if(m.getChr()=="MT")       //si el que comparamos es MT, es menor el this
+        return false;
+     else if(m.getChr()!=getChr())
+        return getChr()>m.getChr();
+  }
+  else{                          //en caso de que sea numero
+      if(m.getChr()>="MT"){
+         //cout << m.getChr() << "\n";
+         return false;
+      }
+      else{
+            //cout << m.getChr() << "\n";
+        if(atoi(getChr().c_str())!=atoi(m.getChr().c_str()))
+            return atoi(getChr().c_str())>atoi(m.getChr().c_str());
+        }
+  }
+
+   return getPos() > m.getPos();
 }
 
 /** @brief Getter ID
