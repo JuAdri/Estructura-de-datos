@@ -134,6 +134,116 @@ typename conjunto<T,CMP>::const_iterator& conjunto<T,CMP>::const_iterator::opera
 
 //////////////////
 
+/*CLASE ITERATOR IMPAR*/
+
+template <typename T, typename CMP>
+conjunto<T,CMP>::impar_iterator::impar_iterator(){
+
+}
+
+template <typename T, typename CMP>
+conjunto<T,CMP>::impar_iterator::impar_iterator(const impar_iterator& ite){
+
+}
+
+template <typename T, typename CMP>
+const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::impar_iterator::operator*(){
+    return (*it);
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::impar_iterator& conjunto<T,CMP>::impar_iterator::operator++(){
+    ++it;
+    if(it.getPos() % 2 != 0)
+      ++it;
+
+    return *this;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::impar_iterator::operator++(int i){
+    it+=i;
+    if(it.getPos() % 2 == 0)
+      ++it;
+    return *this;
+}
+
+template <typename T, typename CMP>
+bool conjunto<T,CMP>::impar_iterator::operator==(const impar_iterator& x) const{
+    return it==x.it;
+}
+
+template <typename T, typename CMP>
+bool conjunto<T,CMP>::impar_iterator::operator!=(const impar_iterator& x) const{
+    return it!=x.it;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::impar_iterator& conjunto<T,CMP>::impar_iterator::operator =(const impar_iterator& x){
+    if(this != &x){
+        this->elvector = x.elvector;
+        it= x.it;
+    }
+    return *this;
+}
+
+//////////////////
+
+/*CLASE CONST_ITERATOR IMPAR*/
+
+template <typename T, typename CMP>
+conjunto<T,CMP>::const_impar_iterator::const_impar_iterator(){
+
+}
+
+template <typename T, typename CMP>
+conjunto<T,CMP>::const_impar_iterator::const_impar_iterator(const impar_iterator& ite){
+
+}
+
+template <typename T, typename CMP>
+const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::const_impar_iterator::operator*(){
+    return (*it);
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_impar_iterator& conjunto<T,CMP>::const_impar_iterator::operator++(){
+    ++it;
+    if(it.getPos() % 2 != 0)
+      ++it;
+
+    return *this;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::const_impar_iterator::operator++(int i){
+    it+=i;
+    if(it.getPos() % 2 == 0)
+      ++it;
+    return *this;
+}
+
+template <typename T, typename CMP>
+bool conjunto<T,CMP>::const_impar_iterator::operator==(const impar_iterator& x) const{
+    return it==x.it;
+}
+
+template <typename T, typename CMP>
+bool conjunto<T,CMP>::const_impar_iterator::operator!=(const impar_iterator& x) const{
+    return it!=x.it;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_impar_iterator& conjunto<T,CMP>::const_impar_iterator::operator =(const impar_iterator& x){
+    if(this != &x){
+        this->elvector = x.elvector;
+        it= x.it;
+    }
+    return *this;
+}
+
+//////////////////
+
 template <typename T, typename CMP>
 conjunto<T,CMP>::conjunto(){}
 
@@ -271,6 +381,31 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::cbegin() const{
     return it;
 }
 
+//METODO IBEGIN
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::ibegin(){
+    conjunto<T, CMP>::impar_iterator ite;
+    ite.elvector=&vm;
+    if(begin().getPos() % 2 != 0)
+      ite.it=ite.elvector->begin();
+    else
+      ite.it = ite.elvector->begin()--;
+
+    return ite;
+}
+
+//METODO CIBEGIN
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::cibegin() const{
+    conjunto<T, CMP>::const_impar_iterator ite;
+    ite.elvector=&vm;
+    if(begin().getPos() % 2 != 0)
+      ite.it=ite.elvector->begin();
+    else
+      ite.it = ite.elvector->begin()--;
+
+    return ite;
+}
 
 //METODO END
 template <typename T, typename CMP>
@@ -292,6 +427,31 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::cend() const{
     return ite;
 }
 
+//METODO IEND
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::iend(){
+    conjunto<T, CMP>::impar_iterator ite;
+    ite.elvector=&vm;
+    if(end().getPos() % 2 != 0)
+      ite.it=ite.elvector->end();
+    else
+      ite.it = ite.elvector->end()--;
+
+    return ite;
+}
+
+//METODO CIEND
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::ciend() const{
+    conjunto<T, CMP>::const_impar_iterator ite;
+    ite.elvector=&vm;
+    if(end().getPos() % 2 != 0)
+      ite.it=ite.elvector->end();
+    else
+      ite.it = ite.elvector->end()--;
+
+    return ite;
+}
 
 //METODOS LOWER_BOUND
 template <typename T, typename CMP>
