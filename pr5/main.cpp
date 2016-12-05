@@ -64,25 +64,28 @@ int main(int argc, char *argv[]){
   //Imprimir número de elementos almacenados en conjuntoMutaciones
   cout << "Lectura del fichero finalizada. Mutaciones cargadas: " << cm.size() << endl;  
   
-  conjunto<mutacion,less<mutacion> >::iterator it = cm.find(*cm.begin());
-  
-  
-  
+  conjunto<mutacion,less<mutacion> >::iterator ite;// = cm.find(*cm.begin());
+   
+  /*
   if (it == cm.end())
     cout << "No está."<<endl;
   else 
       cout << (*it).getID() << " " << (*it).getPos() << endl;
-  /*
+  */
   mutacion x,y;
 
-  x.setPos(0);
-  x.setChr("3");
+  x.setPos(1014359);
+  x.setChr("1");
+  x.setID("rs672601312");
   
   y.setPos(0);
-  y.setChr("4");
+  y.setChr("MT");
   
-  cout << "En rango "<< cm.lower_bound(y)-cm.lower_bound(x)<< "pos inicio "<< cm.lower_bound(x)-cm.begin() << " pos fin "<<cm.lower_bound(y)-cm.begin()<< endl;
   
+  
+  cout << "En rango " << *cm.lower_bound(x) << "pos inicio "<< cm.lower_bound(x)-cm.begin() << " pos fin "<< cm.lower_bound(y)-cm.begin()<< endl;
+  
+  /*
   cm.erase(cm.end()-7); // borro
   cout << cm.size()<< endl;
   cout << cm.erase(x) << endl;

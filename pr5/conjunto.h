@@ -178,14 +178,13 @@ public:
 	@post no modifica el conjunto.
 	*/
     iterator upper_bound (const value_type& val);
-    
     const_iterator upper_bound (const value_type& val) const;
  
        /*CLASES DE ITERADORES NO CONSTANTES*/
 	class iterator{
         public:
                 iterator();
-                iterator(const iterator &  x);
+                iterator(const iterator&  x);
                 iterator(const secure_iterator &  x); // Transforma secure_iterator en iterator;
 
                 const T & operator*();
@@ -193,9 +192,10 @@ public:
                 iterator& operator+=(int i);
                 iterator& operator--();
                 iterator& operator-=(int i);
+                int operator-(const iterator &it_r) const;
                 bool operator==(const iterator & x) const ;		  
                 bool operator!=(const iterator & x) const ;
-                iterator & operator=(const iterator & x);
+                iterator& operator=(const iterator & x);
         private:
                 friend class conjunto<T,CMP>;
                 typename vector<T>::iterator it;
@@ -285,7 +285,8 @@ public:
 			const_impar_iterator operator++(int i);
 			bool operator==(const impar_iterator & x) const;
 			bool operator!=(const impar_iterator & x) const;
-			const_impar_iterator & operator=(const impar_iterator & x);
+			
+                        const_impar_iterator & operator=(const impar_iterator & x);
 		private:
 			friend class conjunto<T,CMP>;
 			typename vector<T>::const_iterator it;
