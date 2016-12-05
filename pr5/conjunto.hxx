@@ -154,9 +154,10 @@ const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::impar_iterator::op
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator& conjunto<T,CMP>::impar_iterator::operator++(){
     ++it;
-    if(it->getPos() % 2 != 0)
-      ++it;
-
+    while(it->getPos() % 2 == 0 && it != elvector->end()){
+        ++it;
+    }
+    
     return *this;
 }
 
@@ -386,15 +387,13 @@ typename conjunto<T,CMP>::const_iterator conjunto<T,CMP>::cbegin() const{
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::ibegin(){
     conjunto<T, CMP>::impar_iterator ite;
-    conjunto<T, CMP>::iterator itb= begin();
-    ite.elvector=&vm;
-    if(itb.it->getPos() % 2 != 0)
-      ite.it=itb.it;
-    else{
-        for(; itb != end(); ++itb)
-             if(itb.it->getPos() % 2 != 0)
-                 ite.it=itb.it;
+    ite.elvector= &vm;
+    ite.it=ite.elvector->begin();
+    
+    while(ite.it->getPos() % 2 == 0 && ite.it != ite.elvector->end()){
+        ++ite.it;
     }
+    
     return ite;
 }
 

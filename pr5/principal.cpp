@@ -109,7 +109,7 @@ int main(int argc, char *argv[]){
   
     cout << "Posiciones Impares" <<endl;
     
-   
+    
     for (auto iti=cmg.ibegin(); iti!=cmg.iend(); ++iti)
         cout << *iti <<endl;
 /*
