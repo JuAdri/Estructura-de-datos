@@ -338,7 +338,7 @@ ostream& operator<< (ostream& os, const mutacion& m){
   *@param[in] m Mutacion a comparar
   * @return True si son iguales, false si no lo son
   */
-bool mutacion::operator==(const mutacion& m){
+bool mutacion::operator==(const mutacion& m) const{
    return getID() == m.getID();
 }
 
@@ -582,11 +582,3 @@ void mutacion::setID(const string& id)
 {
  this->ID= id;
 }
-
-
-
-
-
-
-
-

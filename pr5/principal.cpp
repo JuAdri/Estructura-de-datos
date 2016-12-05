@@ -2,11 +2,11 @@
 #include <iostream>
 #include <fstream>
 
-#include "conjuntoIt.h"
+#include "conjunto.h"
 
 using namespace std;
-	
-	
+
+
 typedef conjunto<int,int> aaa;
 	/** @brief lee un fichero de mutaciones, linea a linea
 	@param[in] s nombre del fichero
@@ -22,15 +22,15 @@ bool load(conjunto<mutacion,CMP>  &  cm, const string & s) {
  fe.open(s.c_str(), ifstream::in);
  if (fe.fail()){
    cerr << "Error al abrir el fichero " << s << endl;
- } 
+ }
  else {
     //leo la cabecera del fichero (líneas que comienzan con #)
-    do{ 
-      getline(fe,cadena,'\n'); 
+    do{
+      getline(fe,cadena,'\n');
     }while (cadena.find('#')!=string::npos && !fe.eof());
 
     //leo la tabla de mutaciones, una línea cada vez
-    while ( !fe.eof() ){ 
+    while ( !fe.eof() ){
         //cout << "leo:: "<< cadena << endl;
         // Invoco el constructor de mutación que recibe una cadena completa, la parsea y crea la mutación.
         mutacion mut = mutacion(cadena);
@@ -41,7 +41,7 @@ bool load(conjunto<mutacion,CMP>  &  cm, const string & s) {
     }
     fe.close();
     return true;
-  } // else 
+  } // else
   fe.close();
   return false;
  }
@@ -52,8 +52,8 @@ int cont = 0;
 
 
  while (ita!=itb){
-   cont++;
-   ita++;
+   ++cont;
+   ++ita;
 
  }
 
@@ -62,51 +62,51 @@ return cont;
 
 int main(int argc, char *argv[]){
 	conjunto<mutacion,less<mutacion> > cm;
-	
+
 	cout << "Hola" <<endl;
     load(cm,"clinvar_20160831.vcf");
-    
+
     //Imprimir número de elementos almacenados en conjuntoMutaciones
-    cout << "Lectura del fichero finalizada. Mutaciones cargadas: "<<cm.size()<<endl;  
-    
+    cout << "Lectura del fichero finalizada. Mutaciones cargadas: "<<cm.size()<<endl;
+
     mutacion x,y;
-    
+
     auto it = cm.find(*cm.begin());
-    
+
     if (it == cm.end())
       cout << "No esta"<<endl;
     else cout << (*it).getID() << " "  << (*it).getPos() << endl;
-    
+
     x.setPos(0);
     x.setChr("3");
-    
+
     y.setPos(0);
     y.setChr("4");
-    
+
     cout << "En rango "<< distancia(cm.lower_bound(x),cm.lower_bound(y)) << endl;
     it = cm.end();
-    for (int i=0;i<7;i++) 
+    for (int i=0;i<7;i++)
 	--it;
 
     cm.erase(it); // borro
     cout << cm.size()<< endl;
     cout << cm.erase(x) << endl;
     int i=0;
-    for (mutacion m :cm){	
+    for (mutacion m :cm){
         //if (i%10==0)
 	      cout << m<<endl;
 	    i++;
 	}
 
 	conjunto<mutacion,greater<mutacion> > cmg;
-	
+
 	cout << "Leo decreciente!!!" <<endl;
     load(cmg,"clinvar_20160831.vcf");
    i = 0;
-   cout << cmg.size() << endl;
+  cout << cmg.size() << endl;
 
   cout << cmg << endl;
-    
+/*
     cout << "Posiciones Impares" <<endl;
    for (auto iti=cmg.ibegin();iti!=cmg.iend();++iti)
         cout << *iti <<endl;
@@ -115,15 +115,13 @@ int main(int argc, char *argv[]){
    --sit;
  // Borro 10 elementos;
    for (int i=0;i<10;i++)
-       cmg.erase(cmg.end()--);
+       cmg.erase(--cmg.end());
 
-  
+
    cout << *sit << endl; // Iterador no valido, debe abortar
 
 
-       
-    cin >> i;
+
+    cin >> i;*/
     return 0;
 }
- 
- 
