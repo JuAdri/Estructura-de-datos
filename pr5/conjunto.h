@@ -249,6 +249,7 @@ public:
                 const_iterator operator++(int i);
                 const_iterator& operator--();
                 const_iterator operator--(int i);
+                int operator-(const const_iterator &it_r) const;
                 bool operator==(const const_iterator & x) const ;		  
                 bool operator!=(const const_iterator & x) const ;
                 const_iterator& operator=(const const_iterator & x);
