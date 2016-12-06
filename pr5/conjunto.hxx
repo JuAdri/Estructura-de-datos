@@ -157,7 +157,7 @@ typename conjunto<T,CMP>::impar_iterator& conjunto<T,CMP>::impar_iterator::opera
     while(it->getPos() % 2 == 0 && it != elvector->end()){
         ++it;
     }
-    
+
     return *this;
 }
 
@@ -241,6 +241,93 @@ typename conjunto<T,CMP>::const_impar_iterator& conjunto<T,CMP>::const_impar_ite
         it= x.it;
     }
     return *this;
+}
+
+//////////////////
+
+/*CLASE SECURE ITERATOR*/
+
+template <typename T, typename CMP>
+conjunto<T,CMP>::secure_iterator::secure_iterator(){
+
+}
+
+template <typename T, typename CMP>
+conjunto<T,CMP>::secure_iterator::secure_iterator(const secure_iterator& ite){
+
+}
+
+template <typename T, typename CMP>
+const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::secure_iterator::operator*(){
+    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
+    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+    assert(*it >= *it_inicio && *it <= *it_fin);
+    return (*it);
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator++(){
+    ++it;
+    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
+    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+    assert(*it >= *it_inicio && *it <= *it_fin);
+    return *this;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator+=(int i){
+    it+=i;
+    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
+    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+    assert(*it >= *it_inicio && *it <= *it_fin);
+    return *this;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator--(){
+    --it;
+    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
+    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+    assert((*it) >= (*it_inicio) && (*it) <= (*it_fin));
+    return *this;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator-=(int i){
+    it-=i;
+    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
+    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+    assert(*it >= *it_inicio && *it <= *it_fin);
+    return *this;
+}
+
+template <typename T, typename CMP>
+bool conjunto<T,CMP>::secure_iterator::operator==(const secure_iterator& x) const{
+    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
+    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+    assert(*it >= *it_inicio && *it <= *it_fin);
+    return it==x.it;
+}
+
+template <typename T, typename CMP>
+bool conjunto<T,CMP>::secure_iterator::operator!=(const secure_iterator& x) const{
+    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
+    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+    assert(*it >= *it_inicio && *it <= *it_fin);
+    return it!=x.it;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator =(const secure_iterator& x){
+  typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
+  typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+  assert(*it >= *it_inicio && *it <= *it_fin);
+
+  if(this != &x){
+      this->elvector = x.elvector;
+      it= x.it;
+  }
+  return *this;
 }
 
 //////////////////
@@ -389,11 +476,11 @@ typename conjunto<T,CMP>::impar_iterator conjunto<T,CMP>::ibegin(){
     conjunto<T, CMP>::impar_iterator ite;
     ite.elvector= &vm;
     ite.it=ite.elvector->begin();
-    
+
     while(ite.it->getPos() % 2 == 0 && ite.it != ite.elvector->end()){
         ++ite.it;
     }
-    
+
     return ite;
 }
 
@@ -406,6 +493,16 @@ typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::cibegin() const{
       ite.it=ite.elvector->begin();
     else
       ite.it = ite.elvector->begin()--;
+
+    return ite;
+}
+
+//METODO SBEGIN
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::sbegin(){
+    conjunto<T, CMP>::secure_iterator ite;
+    ite.elvector=&vm;
+    ite.it=ite.elvector->begin();
 
     return ite;
 }
@@ -449,6 +546,16 @@ typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::ciend() const{
       ite.it=ite.elvector->end();
     else
       ite.it = ite.elvector->end()--;
+
+    return ite;
+}
+
+//METODO END
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::send(){
+    conjunto<T, CMP>::secure_iterator ite;
+    ite.elvector=&vm;
+    ite.it=ite.elvector->end();
 
     return ite;
 }
@@ -550,7 +657,7 @@ ostream& operator<< (ostream& os, const conjunto<T,CMP> &c){
    //Imprimir todo el conjunto de mutaciones
 typename conjunto<T,CMP>::const_iterator it=c.cbegin();
 typename conjunto<T,CMP>::const_iterator itf=c.cend();
-   
+
 for(; it!=itf; ++it){
       os << *it;
       if(++it != c.cend())

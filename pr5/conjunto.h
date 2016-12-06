@@ -208,9 +208,9 @@ public:
 			secure_iterator(const secure_iterator &  x);
 			const T & operator*();
 			secure_iterator & operator++();
-			secure_iterator operator++(int i);
+			secure_iterator & operator+=(int i);
 			secure_iterator & operator--();
-			secure_iterator operator--(int i);
+			secure_iterator & operator-=(int i);
 			bool operator==(const secure_iterator & x) const ;
 			bool operator!=(const secure_iterator & x) const ;
 			secure_iterator & operator=(const secure_iterator & x);

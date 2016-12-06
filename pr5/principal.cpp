@@ -101,18 +101,18 @@ int main(int argc, char *argv[]){
 	cout << "Leo decreciente!!!" <<endl;
     load(cmg,"clinvar_20160831.vcf");
    i = 0;
-   
+
   cout << cmg.size() << endl;
 
   cout << cmg << endl;
 
-  
+
     cout << "Posiciones Impares" <<endl;
-    
-    
+
+
     for (auto iti=cmg.ibegin(); iti!=cmg.iend(); ++iti)
         cout << *iti <<endl;
-/*
+
    conjunto<mutacion,greater<mutacion> >::secure_iterator sit=cmg.send();
    --sit;
  // Borro 10 elementos;
@@ -124,6 +124,6 @@ int main(int argc, char *argv[]){
 
 
 
-    cin >> i;*/
+    cin >> i;
     return 0;
 }
