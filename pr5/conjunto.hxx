@@ -286,8 +286,8 @@ typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::ope
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator--(){
     --it;
-    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
-    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
+    typename conjunto<T,CMP>::iterator it_inicio = elvector->begin();
+    typename conjunto<T,CMP>::iterator it_fin = elvector->end();
     assert((*it) >= (*it_inicio) && (*it) <= (*it_fin));
     return *this;
 }
