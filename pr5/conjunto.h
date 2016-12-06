@@ -264,9 +264,9 @@ public:
 			const_secure_iterator();
 			const T & operator*();
 			const_secure_iterator & operator++();
-			const_secure_iterator operator++(int i);
+			const_secure_iterator & operator+=(int i);
 			const_secure_iterator & operator--();
-			const_secure_iterator operator--(int i);
+			const_secure_iterator & operator-=(int i);
 			bool operator==(const secure_iterator & x) const ;
 			bool operator!=(const secure_iterator & x) const ;
 			const_secure_iterator & operator=(const secure_iterator & x);

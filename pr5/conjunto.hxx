@@ -2,6 +2,12 @@
 
 */
 
+/*COMANDO PARA COMPILAR!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+gcc -o principal principal.cpp -std=c++11 -lstdc++
+
+*************************************************/
+
 #include "conjunto.h"
 
 /*CLASE ITERATOR*/
@@ -259,69 +265,119 @@ conjunto<T,CMP>::secure_iterator::secure_iterator(const secure_iterator& ite){
 
 template <typename T, typename CMP>
 const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::secure_iterator::operator*(){
-    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
-    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
-    assert(*it >= *it_inicio && *it <= *it_fin);
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
     return (*it);
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator++(){
     ++it;
-    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
-    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
-    assert(*it >= *it_inicio && *it <= *it_fin);
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
     return *this;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator+=(int i){
     it+=i;
-    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
-    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
-    assert(*it >= *it_inicio && *it <= *it_fin);
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
     return *this;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator--(){
     --it;
-    typename conjunto<T,CMP>::iterator it_inicio = elvector->begin();
-    typename conjunto<T,CMP>::iterator it_fin = elvector->end();
-    assert((*it) >= (*it_inicio) && (*it) <= (*it_fin));
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
     return *this;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator-=(int i){
     it-=i;
-    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
-    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
-    assert(*it >= *it_inicio && *it <= *it_fin);
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
     return *this;
 }
 
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::secure_iterator::operator==(const secure_iterator& x) const{
-    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
-    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
-    assert(*it >= *it_inicio && *it <= *it_fin);
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
     return it==x.it;
 }
 
 template <typename T, typename CMP>
 bool conjunto<T,CMP>::secure_iterator::operator!=(const secure_iterator& x) const{
-    typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
-    typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
-    assert(*it >= *it_inicio && *it <= *it_fin);
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
     return it!=x.it;
 }
 
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator& conjunto<T,CMP>::secure_iterator::operator =(const secure_iterator& x){
-  typename conjunto<T,CMP>::secure_iterator it_inicio = elvector->sbegin();
-  typename conjunto<T,CMP>::secure_iterator it_fin = elvector->send();
-  assert(*it >= *it_inicio && *it <= *it_fin);
+  assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
+
+  if(this != &x){
+      this->elvector = x.elvector;
+      it= x.it;
+  }
+  return *this;
+}
+
+//////////////////
+
+/*CLASE CONST SECURE ITERATOR*/
+
+template <typename T, typename CMP>
+conjunto<T,CMP>::const_secure_iterator::const_secure_iterator(){
+
+}
+
+template <typename T, typename CMP>
+const typename conjunto<T, CMP>::value_type& conjunto<T,CMP>::const_secure_iterator::operator*(){
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
+    return (*it);
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_iterator::operator++(){
+    ++it;
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
+    return *this;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_iterator::operator+=(int i){
+    it+=i;
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
+    return *this;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_iterator::operator--(){
+    --it;
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
+    return *this;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_iterator::operator-=(int i){
+    it-=i;
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
+    return *this;
+}
+
+template <typename T, typename CMP>
+bool conjunto<T,CMP>::const_secure_iterator::operator==(const secure_iterator& x) const{
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
+    return it==x.it;
+}
+
+template <typename T, typename CMP>
+bool conjunto<T,CMP>::const_secure_iterator::operator!=(const secure_iterator& x) const{
+    assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
+    return it!=x.it;
+}
+
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_secure_iterator& conjunto<T,CMP>::const_secure_iterator::operator =(const secure_iterator& x){
+  assert( ((*it) > (*elvector->begin()) || (*it) == (*elvector->begin()) ) && ( (*it) < (*elvector->end()) || (*it) == (*elvector->end()) ) );
 
   if(this != &x){
       this->elvector = x.elvector;
@@ -507,6 +563,16 @@ typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::sbegin(){
     return ite;
 }
 
+//METODO CSBEGIN
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::csbegin() const{
+    conjunto<T, CMP>::const_secure_iterator ite;
+    ite.elvector=&vm;
+    ite.it=ite.elvector->begin();
+
+    return ite;
+}
+
 //METODO END
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::iterator conjunto<T,CMP>::end(){
@@ -550,10 +616,20 @@ typename conjunto<T,CMP>::const_impar_iterator conjunto<T,CMP>::ciend() const{
     return ite;
 }
 
-//METODO END
+//METODO SEND
 template <typename T, typename CMP>
 typename conjunto<T,CMP>::secure_iterator conjunto<T,CMP>::send(){
     conjunto<T, CMP>::secure_iterator ite;
+    ite.elvector=&vm;
+    ite.it=ite.elvector->end();
+
+    return ite;
+}
+
+//METODO CSEND
+template <typename T, typename CMP>
+typename conjunto<T,CMP>::const_secure_iterator conjunto<T,CMP>::csend() const{
+    conjunto<T, CMP>::const_secure_iterator ite;
     ite.elvector=&vm;
     ite.it=ite.elvector->end();
 
