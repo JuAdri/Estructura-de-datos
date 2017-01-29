@@ -1,0 +1,2 @@
+Deberian ser las etiquetas todas iguales para que se cumpliera que un arbol es Binario de Búsqueda
+y parcialmente ordenado a la vez.

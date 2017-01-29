@@ -7,35 +7,6 @@ using namespace std;
 
 typedef bintree<char> btc;
 
-bool is_operator(char c){
-	return c == '+' || c=='-' || c=='*' || c=='/';
-	}
-
-template <typename T>
-ostream& operator<<(ostream &os, const bintree<T> &arb);
-
-void generarPost( string e_post, bintree<char> &t){
-	stack<bintree<char> > s_bt;
-	bintree<char>::node ni, nd;
-	bintree<char> btaux;
-	
-	for(int i=0; i<e_post.size(); i++){
-		if(!is_operator(e_post[i])){
-			btaux=bintree<char>(e_post[i]);
-			s_bt.push(btaux);
-		}
-		else{
-			btaux=bintree<char>(e_post[i]);
-			btaux.insert_right(btaux.root(), s_bt.top());
-			s_bt.pop();
-			btaux.insert_left(btaux.root(), s_bt.top());
-			s_bt.pop();
-			s_bt.push(btaux);
-		}
-	}
-	
-	t=s_bt.top();
-}
 
  int hijos(const  bintree<int>::node &n){
     if(n.null())
@@ -90,8 +61,8 @@ int main(int argc, char** argv) {
 //	arb2.insert_right(arb2.root().left().right(), 1);
 //	arb2.insert_right(arb2.root().right(), 7);
 	
-        cout << hijos(arb.root().right()) << " " << hijos(arb2.root().right()) << endl;
-        cout << simi(arb.root(), arb2.root()) << endl ; 
+        cout << hijos(arb.root()) << " " << hijos(arb2.root()) << endl;
+        //cout << simi(arb.root(), arb2.root()) << endl ; 
 	cout << arb << endl;	
         
         cout << arb2 << endl;
