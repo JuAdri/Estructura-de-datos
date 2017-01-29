@@ -19,6 +19,7 @@
       <itemPath>Ejercicio5.cpp</itemPath>
       <itemPath>Ejercicio6.cpp</itemPath>
       <itemPath>Ejercicio7.cpp</itemPath>
+      <itemPath>bst.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -59,6 +60,8 @@
       </item>
       <item path="Ejercicio7.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="bst.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -93,6 +96,8 @@
       <item path="Ejercicio6.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ejercicio7.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="bst.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
