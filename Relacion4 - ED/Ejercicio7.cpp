@@ -82,7 +82,7 @@ int depth(btree tree){
         return 0;
 
     ld=depth(tree->izq);
-    ld=depth(tree->der);
+    rd=depth(tree->der);
 
     if (ld>rd)
        return (1+ld);
